@@ -42,7 +42,6 @@ const Contact = () => {
         ?.value,
     };
 
-    // Ensure required fields are filled
     if (
       !formData.from_name ||
       !formData.from_email ||
@@ -55,43 +54,36 @@ const Contact = () => {
         status: "warning",
         duration: 3000,
         isClosable: true,
-        position: "top-right", // Set position to top-right
+        position: "top-right",
       });
       return;
     }
 
-    emailjs
-      .send(
-        "service_b6ixusq", // Service ID
-        "template_7448b28", // Template ID
-        formData, // Data object matching template variables
-        "iBQtngLQco2C9RRZT" // Public key
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          toast({
-            title: "Success",
-            description: "Message sent successfully!",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-            position: "top-right", // Set position to top-right
-          });
-          form.reset();
-        },
-        (error) => {
-          console.error(error.text);
-          toast({
-            title: "Error",
-            description: "Failed to send message. Please try again.",
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-            position: "top-right", // Set position to top-right
-          });
-        }
-      );
+    emailjs.send("service_id", "template_id", formData, "public_key").then(
+      (result) => {
+        console.log(result.text);
+        toast({
+          title: "Success",
+          description: "Message sent successfully!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
+        form.reset();
+      },
+      (error) => {
+        console.error(error.text);
+        toast({
+          title: "Error",
+          description: "Failed to send message. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
+      }
+    );
   };
 
   return (
